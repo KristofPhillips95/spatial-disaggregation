@@ -13,7 +13,7 @@ Edited
 import os
 import numpy as np
 import pandas as pd
-import pickle
+import pickle as pickle
 from numpy import flatnonzero as find
 from numpy import atleast_1d as arr
 from numpy import concatenate as cat
