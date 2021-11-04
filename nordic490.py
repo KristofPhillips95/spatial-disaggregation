@@ -78,6 +78,31 @@ class N490:
         elif ext == '.mat':
             print('loading from .mat not implemented yet')
 
+    def add_MC(self, CO2_price):
+        MC_dict_type1 = {'Nuclear': 5+12,
+                         'Hydro': 20
+        }
+        MC_dict_type2 = {'CCGT': 51 + 3 + 0.35*CO2_price,
+                        'OCGT': 74 + 0 + 0.51*CO2_price,
+                        'Hard Coal':  21 + 3 + 0.71*CO2_price,
+                         'oil' : 120 + 4 + 0.82*CO2_price,
+                         'Oil': 120 + 4 + 0.82 * CO2_price,
+                         'Bioenergy': 60,
+                         'Steam Turbine': 60,
+                         'Pv': 10,
+                         'Other': 100
+                   }
+        self.gen["MC"] = self.gen.apply(lambda row: self.type_to_MC(row, MC_dict_type1, MC_dict_type2), axis = 1)
+
+
+    def type_to_MC(self,row,MC_dict_1,MC_dict_2):
+        if row.type in MC_dict_1.keys():
+            return MC_dict_1[row.type]
+        else:
+            return MC_dict_2[row.type2]
+
+
+
     def prepare_network(self, year):
         """ Remove dismantled or not yet constructed equipment, check islands etc. """
 
